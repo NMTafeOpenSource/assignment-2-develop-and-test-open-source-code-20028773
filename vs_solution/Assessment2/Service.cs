@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assessment2
 {
@@ -12,7 +8,7 @@ namespace Assessment2
 
         private double _lastServiceOdometerKm = 0;
         private int _serviceCount = 0;
-        // TODO add lastServiceDate
+        private DateTime _lastServiceDate;
 
         // return the last service
         public double getLastServiceOdometerKm()
@@ -25,10 +21,11 @@ namespace Assessment2
          * saves it and increase serviceCount.
          * @param distance 
          */
-        public void recordService(int distance)
+        public void recordService(double distance)
         {
             _lastServiceOdometerKm = distance;
             _serviceCount++;
+            _lastServiceDate = DateTime.Now;
         }
 
         // return how many services the car has had
