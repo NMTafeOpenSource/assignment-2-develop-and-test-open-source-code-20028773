@@ -2,14 +2,14 @@
 {
     public class Journey
     {
-        private double kilometers;
+        private double _kilometers;
 
         /**
          * Class constructor
          */
         public Journey()
         {
-            this.kilometers = 0;
+            _kilometers = 0;
         }
 
         /** 
@@ -18,7 +18,7 @@
          */
         public void addKilometers(double kilometers)
         {
-            this.kilometers += kilometers;
+            _kilometers += kilometers;
         }
                
         /**
@@ -27,7 +27,7 @@
          */
         public double getKilometers()
         {
-            return kilometers;
+            return _kilometers;
         }
     }
 }
