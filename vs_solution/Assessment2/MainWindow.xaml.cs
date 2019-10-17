@@ -12,7 +12,7 @@ namespace Assessment2
         {
             InitializeComponent();
 
-            Vehicle v = new Vehicle("Ford", "T812", 2014);
+            Vehicle v = new Vehicle("Ford", "T812", 2014, "1CES418", 153132.2, 45.5);
 
             // Vehicle sample distance
             v.addFuel(new Random().NextDouble() * 10, 1.3);
