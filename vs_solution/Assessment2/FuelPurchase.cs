@@ -9,6 +9,8 @@
         public double getFuelEconomy()
         {
             return _fuelEconomy;
+
+            //return this.cost / this.litres;
         }
 
         public double getFuel()
