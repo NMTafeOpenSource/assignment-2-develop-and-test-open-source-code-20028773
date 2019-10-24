@@ -6,21 +6,13 @@ namespace Assessment2
 {
     public class Vehicle
     {
-        private int _id;
-        private string _manufacturer;
-        private string _model;
-        private int _makeYear;
-        private string _registrationNumber;
-        private double _odometerReading;
-        private double _tankCapacity;
-
-        public int Id { get { return _id; } set { _id = value; } }
-        public string Manufacturer { get { return _manufacturer; } set { _manufacturer = value; } }
-        public string Model { get { return _model; } set { _model = value; } }
-        public int MakeYear { get { return _makeYear; } set { _makeYear = value; } }
-        public string RegistrationNumber { get { return _registrationNumber; } set { _registrationNumber = value; } }
-        public double OdometerReading { get { return _odometerReading; } set { _odometerReading = value; } }
-        public double TankCapacity { get { return _tankCapacity; } set { _tankCapacity = value; } }
+        public int Id { get; set; }
+        public string Manufacturer { get; set; }
+        public string Model { get; set; }
+        public int MakeYear { get; set; }
+        public string RegistrationNumber { get; set; }
+        public double OdometerReading { get; set; }
+        public double TankCapacity { get; set; }
         public DateTime ModifiedDate { get; set; }
 
         private FuelPurchase fuelPurchase;
