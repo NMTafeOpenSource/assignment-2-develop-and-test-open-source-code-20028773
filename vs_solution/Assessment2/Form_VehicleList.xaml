@@ -5,14 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
-        Title="Form_VehicleList" Height="450" Width="800">
+        Title="Form_VehicleList" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
         <ListView x:Name="lvVehicleList" 
-                  HorizontalAlignment="Left" 
-                  Height="252" 
-                  Margin="10,106,0,0" 
-                  VerticalAlignment="Top" 
-                  Width="754">
+                  HorizontalAlignment="Center" 
+                  Height="252"                   
+                  VerticalAlignment="Bottom" 
+                  Width="730"
+                  Grid.Column="1" Grid.Row="1"
+                  MouseDoubleClick="LvVehicleList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn 
@@ -39,7 +51,7 @@
                             Header="Odometer" 
                             Width="120" 
                             DisplayMemberBinding="{Binding OdometerReading}" />
-                    
+
                     <GridViewColumn 
                             Header="Tank Capacity" 
                             Width="120" 
@@ -79,5 +91,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Button x:Name="btnAddVehicle" Content="Add New Vehicle" Grid.Column="1" Grid.Row="1" Margin="10,39,603,257" Click="BtnAddVehicle_Click"/>
     </Grid>
 </Window>
