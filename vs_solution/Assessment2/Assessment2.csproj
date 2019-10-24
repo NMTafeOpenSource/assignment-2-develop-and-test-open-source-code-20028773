@@ -58,12 +58,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Form_VehicleList.xaml.cs">
+      <DependentUpon>Form_VehicleList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="JsonData.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="Form_Vehicle.xaml.cs">
       <DependentUpon>Form_Vehicle.xaml</DependentUpon>
     </Compile>
+    <Page Include="Form_VehicleList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
