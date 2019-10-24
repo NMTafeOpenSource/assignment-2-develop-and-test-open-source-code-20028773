@@ -10,7 +10,7 @@ namespace Assessment2
     public partial class Form_VehicleList : Window
     {
         //private Vehicle vehicle = new Vehicle();
-        public static List<Vehicle> vehicleList;
+        //public static List<Vehicle> vehicleList;
 
         public Form_VehicleList()
         {
@@ -21,8 +21,7 @@ namespace Assessment2
 
         public void UpdateList(int nIndex = 0)
         {
-            vehicleList = Vehicle.LoadVehicles();
-            lvVehicleList.ItemsSource = vehicleList;
+            lvVehicleList.ItemsSource = MainWindow.vehicleList;
             lvVehicleList.Items.Refresh();
         }
 
@@ -30,7 +29,7 @@ namespace Assessment2
         {
             Button button = sender as Button;
             Vehicle vehicleItem = button.DataContext as Vehicle;
-            Vehicle.DeleteVehicle(vehicleList, vehicleItem);
+            Vehicle.DeleteVehicle(MainWindow.vehicleList, vehicleItem);
             UpdateList();
         }
 
