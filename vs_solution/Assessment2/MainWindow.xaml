@@ -6,7 +6,112 @@
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" />
+                <MenuItem Header="_Open" />
+                <MenuItem Header="_Save" />
+                <Separator />
+                <MenuItem Header="E_xit"  Click="MiExit_Click"  />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Cut" />
+                <MenuItem Header="_Copy" />
+                <MenuItem Header="_Paste" />
+            </MenuItem>
+            <MenuItem Header="Games" />
+            <MenuItem x:Name="miVehicles" Header="Vehicles" Click="MiVehicles_Click" />
+
+            <MenuItem Header="About"/>
+        </Menu>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <ListView x:Name="lvRentVehicleList" 
+                  HorizontalAlignment="Center" 
+                  Height="250"                   
+                  VerticalAlignment="Bottom" 
+                  Width="730"
+                  Grid.Column="1" Grid.Row="1"
+                  MouseDoubleClick="LvRentVehicleList_MouseDoubleClick">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn 
+                            Header="Manufacturer" 
+                            Width="100" 
+                            DisplayMemberBinding="{Binding Manufacturer}" />
+
+                        <GridViewColumn 
+                            Header="Model" 
+                            Width="120" 
+                            DisplayMemberBinding="{Binding Model}" />
+
+                        <GridViewColumn 
+                            Header="Year" 
+                            Width="70" 
+                            DisplayMemberBinding="{Binding MakeYear}" />
+
+                        <GridViewColumn 
+                            Header="Registration" 
+                            Width="100" 
+                            DisplayMemberBinding="{Binding RegistrationNumber}" />
+
+                        <GridViewColumn 
+                            Header="Odometer" 
+                            Width="120" 
+                            DisplayMemberBinding="{Binding OdometerReading}" />
+
+                        <GridViewColumn 
+                            Header="Tank Capacity" 
+                            Width="120" 
+                            DisplayMemberBinding="{Binding TankCapacity}" />
+
+                        <GridViewColumn 
+                            Header="Actions"
+                            Width="90">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Click="Button_Click"
+                                                Grid.Column="0"
+                                                Height="24" Width="24"
+                                                Content="E"
+                                                Background="Green">
+                                        </Button>
+                                        <Button Click="Button_Click_1"
+                                                Grid.Column="2"
+                                                Height="24" Width="24"
+                                                Content="D"
+                                                Background="IndianRed">
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+    </DockPanel>
+
 </Window>
