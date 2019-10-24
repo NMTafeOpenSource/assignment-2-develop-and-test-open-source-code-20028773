@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
-        Title="Vehicle" Height="450" Width="800">
+        Title="Vehicle" Height="300" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="lblManufacturer" Content="Manufacturer: " Grid.Column="1" Grid.Row="1" Width="100" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+        <TextBox x:Name="txtManufacturer" Grid.Column="2" Grid.Row="1" Width="200" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
     </Grid>
 </Window>
