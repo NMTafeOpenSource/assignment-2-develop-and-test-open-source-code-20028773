@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Assessment2
 {
     public class Vehicle
     {
-        private int _id = 0;
+        private int _id;
         private string _manufacturer;
         private string _model;
         private int _makeYear;
@@ -12,20 +14,16 @@ namespace Assessment2
         private double _odometerReading;
         private double _tankCapacity;
 
-        public int Id { get { return _id; } set { _id = value + 1; } }
+        public int Id { get { return _id; } set { _id = value; } }
         public string Manufacturer { get { return _manufacturer; } set { _manufacturer = value; } }
         public string Model { get { return _model; } set { _model = value; } }
         public int MakeYear { get { return _makeYear; } set { _makeYear = value; } }
         public string RegistrationNumber { get { return _registrationNumber; } set { _registrationNumber = value; } }
         public double OdometerReading { get { return _odometerReading; } set { _odometerReading = value; } }
         public double TankCapacity { get { return _tankCapacity; } set { _tankCapacity = value; } }
-
-        public List<Vehicle> VehiclesList { get { return _vehicles; } }
-
+        public DateTime ModifiedDate { get; set; }
 
         private FuelPurchase fuelPurchase;
-
-        private List<Vehicle> _vehicles = new List<Vehicle>();
 
         public Vehicle() { }
 
@@ -45,19 +43,43 @@ namespace Assessment2
             RegistrationNumber = registrationNumber;
             OdometerReading = odometerReading;
             TankCapacity = tankCapacity;
+            ModifiedDate = DateTime.Now;
 
             fuelPurchase = new FuelPurchase();
         }
 
-        public void AddVehicle(string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
+        public void AddVehicle(List<Vehicle> vehicleList, string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
         {
-            _vehicles.Add(new Vehicle(_vehicles.Count, manufacturer, model, makeYear, registrationNumber, odometerReading, tankCapacity));
-            JsonData.SaveCompany(_vehicles);
+            vehicleList.Add(new Vehicle((vehicleList.Count > 0 ? vehicleList.Last().Id + 1 : 1), manufacturer, model, makeYear, registrationNumber, odometerReading, tankCapacity));
+            JsonData.Save(vehicleList);
         }
 
-        public void LoadVehicles()
+        public void EditVehicle(List<Vehicle> vehicleList, int id, string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
         {
-            _vehicles = JsonData.LoadCompanies<Vehicle>();
+            Vehicle v = vehicleList.Where(x => x.Id == id).FirstOrDefault();
+
+            v.Manufacturer = manufacturer;
+            v.Model = model;
+            v.MakeYear = makeYear;
+            v.RegistrationNumber = registrationNumber;
+            v.OdometerReading = odometerReading;
+            v.TankCapacity = tankCapacity;
+            v.ModifiedDate = DateTime.Now;
+
+            vehicleList.ToArray().SetValue(v, 0);
+
+            JsonData.Save(vehicleList);
+        }
+
+        public static void DeleteVehicle(List<Vehicle> vehicleList, Vehicle v)
+        {
+            vehicleList.Remove(v);
+            JsonData.Save(vehicleList);
+        }
+
+        public static List<Vehicle> LoadVehicles()
+        {
+            return JsonData.Load<Vehicle>();
         }
 
         /**
