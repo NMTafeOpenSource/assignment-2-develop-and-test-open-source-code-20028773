@@ -7,17 +7,14 @@ namespace Assessment2
 {
     public static class JsonData
     {
-
-        private static string companyFileName = "Vehicles.json";
         private static string clusterFolder = "C4Prog-2019S2-TDD";
-        private static string companyFolder = "Data";
+        private static string dataFolder = "Data";
 
-        public static void Save<T>(/*List<CompanyClass> companyList*/List<T> saveList)
+        public static void Save<T>(List<T> saveList)
         {
             // serialize JSON to a string and then write string to a file
-
             // serialize JSON directly to a file
-            using (StreamWriter file = File.CreateText(GetFileNamePath()))
+            using (StreamWriter file = File.CreateText(GetFileNamePath(typeof(T).Name)))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, saveList);
@@ -26,10 +23,10 @@ namespace Assessment2
 
         public static List<T> Load<T>()
         {
-            //List<CompanyClass> companyList = new List<CompanyClass>();
-            List<T> loadList = new List<T>();
             //// deserialize JSON directly from a file
-            string sFile = GetFileNamePath();
+            List<T> loadList = new List<T>();            
+            string sFile = GetFileNamePath(typeof(T).Name);
+
             if (File.Exists(sFile))
             {
                 using (StreamReader file = File.OpenText(sFile))
@@ -43,14 +40,13 @@ namespace Assessment2
             //    companyList.Add(new CompanyClass(1, "Sample Company", "Sample Address", " Sampe City", "Sample Contact", "0123123456", "WA", "6000", "Australia", "sample@email.com", "www.google.com", DateTime.Now));
             //}
 
-            //return companyList;
             return loadList;
         }
 
-        public static string GetFileNamePath()
+        public static string GetFileNamePath(string fileName)
         {
             string sReturn = "";
-            string companyDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + @clusterFolder + "\\" + @companyFolder;
+            string companyDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\" + @clusterFolder + "\\" + dataFolder;
 
             try
             {
@@ -60,7 +56,7 @@ namespace Assessment2
                     Directory.CreateDirectory(companyDirectoryPath);
                 }
 
-                sReturn = companyDirectoryPath + "\\" + companyFileName;
+                sReturn = companyDirectoryPath + "\\" + fileName + ".json";
 
             }
             catch (IOException e)
