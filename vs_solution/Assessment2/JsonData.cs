@@ -12,7 +12,7 @@ namespace Assessment2
         private static string clusterFolder = "C4Prog-2019S2-TDD";
         private static string companyFolder = "Data";
 
-        public static void SaveCompany<T>(/*List<CompanyClass> companyList*/List<T> saveList)
+        public static void Save<T>(/*List<CompanyClass> companyList*/List<T> saveList)
         {
             // serialize JSON to a string and then write string to a file
 
@@ -24,14 +24,15 @@ namespace Assessment2
             }
         }
 
-        public static List<T> LoadCompanies<T>()
+        public static List<T> Load<T>()
         {
             //List<CompanyClass> companyList = new List<CompanyClass>();
             List<T> loadList = new List<T>();
             //// deserialize JSON directly from a file
-            if (File.Exists(GetFileNamePath()))
+            string sFile = GetFileNamePath();
+            if (File.Exists(sFile))
             {
-                using (StreamReader file = File.OpenText(GetFileNamePath()))
+                using (StreamReader file = File.OpenText(sFile))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     loadList = (List<T>)serializer.Deserialize(file, typeof(List<T>));
