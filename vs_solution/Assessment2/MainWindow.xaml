@@ -20,7 +20,8 @@
                 <MenuItem Header="_Copy" />
                 <MenuItem Header="_Paste" />
             </MenuItem>
-            <MenuItem Header="Games" />
+            
+            <MenuItem x:Name="miRents" Header="Rent" Click="MiRents_Click" />
             <MenuItem x:Name="miVehicles" Header="Vehicles" Click="MiVehicles_Click" />
 
             <MenuItem Header="About"/>
