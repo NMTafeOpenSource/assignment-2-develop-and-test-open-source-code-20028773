@@ -15,6 +15,14 @@ namespace Assessment2
         public double TankCapacity { get; set; }
         public DateTime ModifiedDate { get; set; }
 
+        public string vehicleDescription
+        {
+            get
+            {
+                return Manufacturer + " - " + Model;
+            }
+        }
+
         private FuelPurchase fuelPurchase;
 
         public Vehicle() { }
@@ -56,6 +64,18 @@ namespace Assessment2
             v.RegistrationNumber = registrationNumber;
             v.OdometerReading = odometerReading;
             v.TankCapacity = tankCapacity;
+            v.ModifiedDate = DateTime.Now;
+
+            vehicleList.ToArray().SetValue(v, 0);
+
+            JsonData.Save(vehicleList);
+        }
+
+        public void UpdateOdometer(List<Vehicle> vehicleList, int id, double odometerReading)
+        {
+            Vehicle v = vehicleList.Where(x => x.Id == id).FirstOrDefault();
+
+            v.OdometerReading = odometerReading;
             v.ModifiedDate = DateTime.Now;
 
             vehicleList.ToArray().SetValue(v, 0);
