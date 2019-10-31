@@ -61,6 +61,9 @@
     <Compile Include="Form_Rental.xaml.cs">
       <DependentUpon>Form_Rental.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Form_RentalList.xaml.cs">
+      <DependentUpon>Form_RentalList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Form_VehicleList.xaml.cs">
       <DependentUpon>Form_VehicleList.xaml</DependentUpon>
     </Compile>
@@ -72,6 +75,10 @@
       <DependentUpon>Form_Vehicle.xaml</DependentUpon>
     </Compile>
     <Page Include="Form_Rental.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form_RentalList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
