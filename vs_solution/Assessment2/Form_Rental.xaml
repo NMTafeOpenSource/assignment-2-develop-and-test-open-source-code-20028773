@@ -9,18 +9,49 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        
+
+        <Label Content="Customer:" Grid.Column="1" Grid.Row="1"/>
+        <TextBox x:Name="txtCustomer" Grid.Column="2" Grid.Row="1" Width="150" Height="25" />
+
+        <Label Content="Vehicle:" Grid.Column="4" Grid.Row="1"/>
+        <TextBox x:Name="txtVehicle" Grid.Column="5" Grid.Row="1" Width="150" Height="25" IsEnabled="False"/>
+
+        <Label Content="Rent Type:" Grid.Column="1" Grid.Row="2"/>
+        <ComboBox x:Name="cbRentType" Grid.Column="2" Grid.Row="2" Width="150" Height="25"/>
+
+        <Label Content="Start Date:" Grid.Column="1" Grid.Row="3"/>
+        <DatePicker x:Name="dpStartDate" Grid.Column="2" Grid.Row="3" Width="150" Height="25"/>
+        <Label Content="End Date:" Grid.Column="1" Grid.Row="4"/>
+        <DatePicker x:Name="dpEndDate" Grid.Column="2" Grid.Row="4" Width="150" Height="25"/>
+
+        <Label Content="Start Odometer:" Grid.Column="4" Grid.Row="3"/>
+        <TextBox x:Name="txtStartOdometer" Grid.Column="5" Grid.Row="3" Width="150" Height="25" IsEnabled="False"/>
+        <Label Content="End Odometer:" Grid.Column="4" Grid.Row="4"/>
+        <TextBox x:Name="txtEndOdometer" Grid.Column="5" Grid.Row="4" Width="150" Height="25"/>
+
+        <Label Content="Notes:" Grid.Column="1" Grid.Row="5"/>
+        <TextBox x:Name="txtNotes" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="4" />
+
+        <Button x:Name="btnSave" Content="Save" Grid.Column="4" Grid.Row="6" Width="80" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="90,0,0,0" Click="BtnSave_Click"/>
+        <Button x:Name="btnCancel" Content="Cancel" Grid.Column="5" Grid.Row="6" Width="80" Margin="80,0,0,0" Click="BtnCancel_Click" />
     </Grid>
 </Window>
