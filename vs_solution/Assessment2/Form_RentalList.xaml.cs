@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Assessment2
@@ -39,9 +40,7 @@ namespace Assessment2
 
         public void UpdateList()
         {
-            //availableVehicles = vehicleList.Where(x => !rentalList.Where(r => r.totalPrice == 0).Select(p => p.vehicleId).Contains(x.Id)).ToList();
-
-            lvRentalList.ItemsSource = MainWindow.rentalList;
+            lvRentalList.ItemsSource = Rental.rentalList;
             lvRentalList.Items.Refresh();
         }
     }

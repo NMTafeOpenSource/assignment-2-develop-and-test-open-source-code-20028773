@@ -53,13 +53,13 @@
                             DisplayMemberBinding="{Binding OdometerReading}" />
 
                     <GridViewColumn 
-                            Header="Tank Capacity" 
-                            Width="120" 
-                            DisplayMemberBinding="{Binding TankCapacity}" />
+                            Header="Status" 
+                            Width="110" 
+                            DisplayMemberBinding="{Binding StatusText}" />
 
                     <GridViewColumn 
                             Header="Actions"
-                            Width="90">
+                            Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -68,6 +68,8 @@
                                         <RowDefinition Height="auto"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="4"></ColumnDefinition>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="4"></ColumnDefinition>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -83,6 +85,13 @@
                                                 Height="24" Width="24"
                                                 Content="D"
                                                 Background="IndianRed">
+                                    </Button>
+                                    <Button Click="ServiceVehicleButton_Click"
+                                                Grid.Column="4"
+                                                Height="24" Width="24"
+                                                Content="S"
+                                                Background="Orange"
+                                                Visibility="{Binding btnServiceVisibility}">
                                     </Button>
                                 </Grid>
                             </DataTemplate>

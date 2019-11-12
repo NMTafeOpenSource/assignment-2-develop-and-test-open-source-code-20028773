@@ -58,11 +58,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Form_FuelPurchase.xaml.cs">
+      <DependentUpon>Form_FuelPurchase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Form_Rental.xaml.cs">
       <DependentUpon>Form_Rental.xaml</DependentUpon>
     </Compile>
     <Compile Include="Form_RentalList.xaml.cs">
       <DependentUpon>Form_RentalList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Form_VehicleInformation.xaml.cs">
+      <DependentUpon>Form_VehicleInformation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Form_VehicleList.xaml.cs">
       <DependentUpon>Form_VehicleList.xaml</DependentUpon>
@@ -74,11 +80,19 @@
     <Compile Include="Form_Vehicle.xaml.cs">
       <DependentUpon>Form_Vehicle.xaml</DependentUpon>
     </Compile>
+    <Page Include="Form_FuelPurchase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Form_Rental.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Form_RentalList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Form_VehicleInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -57,8 +57,7 @@ namespace Assessment2
 
             if (((System.Windows.Controls.ContentControl)sender).Content.ToString() == "Save")
             {
-                new Rental().AddRental(MainWindow.rentalList,
-                                        vehicleId,
+                new Rental().AddRental( vehicleId,
                                         txtCustomer.Text,
                                         rentaltype,
                                         double.Parse(txtStartOdometer.Text),
@@ -70,7 +69,7 @@ namespace Assessment2
             }
             else
             {
-                new Rental().FinalizeRental(MainWindow.rentalList, rentalId, double.Parse(txtEndOdometer.Text), DateTime.Parse(dpEndDate.Text), txtNotes.Text);
+                new Rental().FinalizeRental(rentalId, double.Parse(txtEndOdometer.Text), DateTime.Parse(dpEndDate.Text), txtNotes.Text);
             }
 
             this.Close();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,22 +19,29 @@ namespace Assessment2
         public double totalPrice { get; set; }
         public DateTime ModifiedDate { get; set; }
 
+        [JsonIgnore]
         public string startDateToString { get { return startDate.ToString("dd/MM/yyyy"); } }
 
+        [JsonIgnore]
         public string vehicleDescription
         {
             get
             {
                 var sAux = "";
 
-                if (MainWindow.vehicleList != null)
+                if (Vehicle.vehicleList != null)
                 {
-                    sAux = MainWindow.vehicleList.Where(x => x.Id == vehicleId).Select(f => f.Manufacturer + " - " + f.Model).FirstOrDefault();
+                    sAux = Vehicle.vehicleList.Where(x => x.Id == vehicleId).Select(f => f.Manufacturer + " - " + f.Model).FirstOrDefault();
                 }
 
                 return sAux;
             }
         }
+
+        private static List<Rental> _rentalList { get { return Load(); } }
+
+        [JsonIgnore]
+        public static List<Rental> rentalList { get { return _rentalList; } }
 
         public enum type
         {
@@ -58,14 +66,17 @@ namespace Assessment2
             this.ModifiedDate = DateTime.Now;
         }
 
-        public void AddRental(List<Rental> rentalList, int vehicleId, string customerName, type rentType, double startOdometer, double endOdometer, DateTime startDate, DateTime endDate, string notes, double totalPrice)
+        public void AddRental(int vehicleId, string customerName, type rentType, double startOdometer, double endOdometer, DateTime startDate, DateTime endDate, string notes, double totalPrice)
         {
+            List<Rental> rentalList = _rentalList;
             rentalList.Add(new Rental((rentalList.Count > 0 ? rentalList.Last().Id + 1 : 1), vehicleId, customerName, rentType, startOdometer, endOdometer, startDate, endDate, notes, totalPrice));
             JsonData.Save(rentalList);
         }
 
-        public void FinalizeRental(List<Rental> rentalList, int id, double endOdometer, DateTime endDate, string notes)
+        public void FinalizeRental(int id, double endOdometer, DateTime endDate, string notes)
         {
+            List<Rental> rentalList = _rentalList;
+
             Rental r = rentalList.Where(x => x.Id == id).FirstOrDefault();
 
             var totalPrice = r.rentType == type.KM
@@ -82,10 +93,16 @@ namespace Assessment2
 
             JsonData.Save(rentalList);
 
-            new Vehicle().UpdateOdometer(MainWindow.vehicleList, r.vehicleId, endOdometer);
+            new Vehicle().UpdateOdometer(r.vehicleId, endOdometer);
         }
 
-        public static List<Rental> LoadRental()
+        public static List<Vehicle> GetAvailableVehicles()
+        {
+            //return MainWindow.vehicleList.Where(x => !MainWindow.rentalList.Where(r => r.totalPrice == 0 || Service.VehicleDueToService(r.vehicleId)).Select(p => p.vehicleId).Contains(x.Id)).ToList();
+            return Vehicle.vehicleList.Where(x => x.Status == Vehicle.statusType.Available).ToList();
+        }
+
+        public static List<Rental> Load()
         {
             return JsonData.Load<Rental>();
         }

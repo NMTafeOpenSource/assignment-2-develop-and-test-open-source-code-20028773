@@ -38,11 +38,11 @@ namespace Assessment2
         {
             if (id != 0)
             {
-                vehicle.EditVehicle(MainWindow.vehicleList, id, txtManufacturer.Text, txtModel.Text, int.Parse(txtYear.Text), txtRegistration.Text, double.Parse(txtOdometer.Text), double.Parse(txtTank.Text));
+                vehicle.EditVehicle(id, txtManufacturer.Text, txtModel.Text, int.Parse(txtYear.Text), txtRegistration.Text, double.Parse(txtOdometer.Text), double.Parse(txtTank.Text));
             }
             else
             {
-                vehicle.AddVehicle(MainWindow.vehicleList, txtManufacturer.Text, txtModel.Text, int.Parse(txtYear.Text), txtRegistration.Text, double.Parse(txtOdometer.Text), double.Parse(txtTank.Text));
+                vehicle.AddVehicle(txtManufacturer.Text, txtModel.Text, int.Parse(txtYear.Text), txtRegistration.Text, double.Parse(txtOdometer.Text), double.Parse(txtTank.Text));
             }
 
             MessageBox.Show("Vehicle " + (id != 0 ? "Edited" : "Created") + " Successfully!", "Vehicle", MessageBoxButton.OK, MessageBoxImage.Information);

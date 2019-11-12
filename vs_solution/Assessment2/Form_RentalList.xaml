@@ -39,17 +39,21 @@
 
                     <GridViewColumn 
                             Header="Rent" 
-                            Width="70" 
+                            Width="50" 
                             DisplayMemberBinding="{Binding rentType}" />
 
                     <GridViewColumn 
                             Header="Start Date" 
-                            Width="100" 
+                            Width="80" 
                             DisplayMemberBinding="{Binding startDateToString}" />
-                    
+
+                    <GridViewColumn 
+                            Header="Price" 
+                            Width="50" 
+                            DisplayMemberBinding="{Binding totalPrice}" />
                     <GridViewColumn 
                             Header="Notes" 
-                            Width="240" 
+                            Width="230" 
                             DisplayMemberBinding="{Binding notes}" />
 
                     <!--<GridViewColumn 

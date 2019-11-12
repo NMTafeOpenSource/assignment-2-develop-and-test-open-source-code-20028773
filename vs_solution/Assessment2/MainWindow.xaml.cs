@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace Assessment2
@@ -11,38 +8,16 @@ namespace Assessment2
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        //List<Vehicle> vehicleList = new List<Vehicle>();
-
-        public static List<Vehicle> vehicleList;
-        public static List<Rental> rentalList;
-        public static List<Vehicle> availableVehicles;
-
+        
         public MainWindow()
         {
             InitializeComponent();
-
-            //Vehicle v = new Vehicle("Ford", "T812", 2014, "1CES418", 153132.2, 45.5);
-
-            // Vehicle sample distance
-            //v.addFuel(new Random().NextDouble() * 10, 1.3);
-
-            //v.printDetails();
-            // System.out.println("\n\n");
-            //new Vehicle().AddVehicle("Ford", "T812", 2014, "1CES418", 153132.2, 45.5);
-
-
-            vehicleList = Vehicle.LoadVehicles();
-            rentalList = Rental.LoadRental();
-
             UpdateList();
         }
 
         public void UpdateList()
         {
-            availableVehicles = vehicleList.Where(x => !rentalList.Where(r => r.totalPrice == 0).Select(p => p.vehicleId).Contains(x.Id)).ToList();
-
-            lvRentVehicleList.ItemsSource = availableVehicles;
+            lvRentVehicleList.ItemsSource = Rental.GetAvailableVehicles();
             lvRentVehicleList.Items.Refresh();
         }
 
@@ -55,6 +30,7 @@ namespace Assessment2
         {
             Form_VehicleList form_VehicleList = new Form_VehicleList();
             form_VehicleList.ShowDialog();
+            UpdateList();
         }
 
         private void LvRentVehicleList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -74,7 +50,7 @@ namespace Assessment2
             Button button = sender as Button;
             Vehicle vehicleItem = button.DataContext as Vehicle;
 
-            new Rental().AddRental(rentalList, vehicleItem.Id, "Koji Furukawa", Rental.type.Day, 0, 0, DateTime.Now, DateTime.Now, null, 0);
+            //new Rental().AddRental( vehicleItem.Id, "Koji Furukawa", Rental.type.Day, 0, 0, DateTime.Now, DateTime.Now, null, 0);
 
             UpdateList();
 
@@ -93,6 +69,7 @@ namespace Assessment2
         {
             Form_RentalList form_RentalList = new Form_RentalList();
             form_RentalList.ShowDialog();
+            UpdateList();
         }
     }
 }
