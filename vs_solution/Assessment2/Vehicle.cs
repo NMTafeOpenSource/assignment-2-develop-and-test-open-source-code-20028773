@@ -91,7 +91,7 @@ namespace Assessment2
         [JsonIgnore]
         public static List<Vehicle> vehicleList { get { return _vehicleList; } }
 
-        private FuelPurchase fuelPurchase;
+        //private FuelPurchase fuelPurchase;
 
         public Vehicle() { }
 
@@ -113,7 +113,7 @@ namespace Assessment2
             TankCapacity = tankCapacity;
             ModifiedDate = DateTime.Now;
 
-            fuelPurchase = new FuelPurchase();
+            //fuelPurchase = new FuelPurchase();
         }
 
         public void AddVehicle(string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
@@ -148,18 +148,21 @@ namespace Assessment2
             JsonData.Save(vehicleList);
         }
 
-        public void UpdateOdometer(int id, double odometerReading)
+        public static void UpdateOdometer(int id, double odometerReading)
         {
             List<Vehicle> vehicleList = _vehicleList;
 
             Vehicle v = vehicleList.Where(x => x.Id == id).FirstOrDefault();
 
-            v.OdometerReading = odometerReading;
-            v.ModifiedDate = DateTime.Now;
+            if (odometerReading > v.OdometerReading)
+            {
+                v.OdometerReading = odometerReading;
+                v.ModifiedDate = DateTime.Now;
 
-            vehicleList.ToArray().SetValue(v, 0);
+                vehicleList.ToArray().SetValue(v, 0);
 
-            JsonData.Save(vehicleList);
+                JsonData.Save(vehicleList);
+            }
         }
 
         public static void DeleteVehicle(Vehicle v)
@@ -179,22 +182,18 @@ namespace Assessment2
          */
         public static string printDetails(Vehicle v)
         {
-            Service s = Service.serviceList.Where(x => x.vehicleId == v.Id).LastOrDefault();
-
-            double totalRevenue = Rental.rentalList.Where(x => x.vehicleId == v.Id).Sum(t => t.totalPrice);
-
             StringBuilder sAux2 = new StringBuilder();
             sAux2.AppendFormat("Vehicle: {0} {1} {2}", v.Manufacturer, v.Model, v.MakeYear);
             sAux2.AppendLine();
             sAux2.AppendFormat("Registration No: {0}", v.RegistrationNumber);
             sAux2.AppendLine();
-            sAux2.AppendFormat("Total services: {0}", s.getServiceCount());
+            sAux2.AppendFormat("Total services: {0}", Service.StaticGetServiceCount(v.Id));
             sAux2.AppendLine();
-            sAux2.AppendFormat("Revenue recorded: {0:C}", totalRevenue);
+            sAux2.AppendFormat("Revenue recorded: {0:C}", Rental.GetTotalRevenue(v.Id));
             sAux2.AppendLine();
-            sAux2.AppendFormat("Kilometres since last service: {0} km", (v.OdometerReading - s.lastServiceOdometerKm).ToString());
+            sAux2.AppendFormat("Kilometres since last service: {0} km", Service.GetKmSinceLastService(v));
             sAux2.AppendLine();
-            sAux2.AppendFormat("Fuel economy: {0:C}", totalRevenue);
+            sAux2.AppendFormat("Fuel economy: {0:C}", FuelPurchase.GetFuelEconomy(v.Id));
             sAux2.AppendLine();
             sAux2.AppendFormat("Requires a service: {0}", v.Status == statusType.NeedService ? "Yes" : "No");
             sAux2.AppendLine();
@@ -213,7 +212,7 @@ namespace Assessment2
         // adds fuel to the car
         public void addFuel(double litres, double price)
         {
-            fuelPurchase.purchaseFuel(litres, price);
+            //fuelPurchase.purchaseFuel(litres, price);
         }
 
     }
@@ -230,5 +229,12 @@ namespace Assessment2
             return e.ToString();
         }
     }
+
+    ///TODO
+    ///DONT LET PURCHASE FUEL IF THE QUANTITY > TANK
+    ///CREATE FORM VALIDATIONS FOR ALL FORMS
+    ///CREATE HISTORY PAGE FOR VEHICLE WITH SERVICES, FUEL AND RENT
+    ///TIDE THE FORMS
+    ///CORRECT THE FUEL ECONOMY DISPLAY
 
 }
