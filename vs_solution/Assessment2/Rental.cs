@@ -93,12 +93,16 @@ namespace Assessment2
 
             JsonData.Save(rentalList);
 
-            new Vehicle().UpdateOdometer(r.vehicleId, endOdometer);
+            Vehicle.UpdateOdometer(r.vehicleId, endOdometer);
+        }
+
+        public static double GetTotalRevenue(int vehicheId)
+        {
+            return rentalList.Where(x => x.vehicleId == vehicheId).Sum(t => t.totalPrice);
         }
 
         public static List<Vehicle> GetAvailableVehicles()
         {
-            //return MainWindow.vehicleList.Where(x => !MainWindow.rentalList.Where(r => r.totalPrice == 0 || Service.VehicleDueToService(r.vehicleId)).Select(p => p.vehicleId).Contains(x.Id)).ToList();
             return Vehicle.vehicleList.Where(x => x.Status == Vehicle.statusType.Available).ToList();
         }
 
