@@ -99,6 +99,17 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+            <!--context  Menu-->
+            <ListView.ContextMenu>
+                <ContextMenu Name="ZoneIformationList" StaysOpen="true" Background="WhiteSmoke">
+                    <ContextMenu.BitmapEffect>
+                        <BitmapEffectGroup/>
+                    </ContextMenu.BitmapEffect>
+                    <MenuItem Header="Edit" Name="EditNutritionContextMenu"  Click="EditNutritionContextMenu_Click"/>
+                    <MenuItem Header="Purchase Fuel" Name="btnPurchaseFuel"  Click="BtnPurchaseFuel_Click"/>
+                    <MenuItem Header="Remove" Name="RemoveNutritionContextMenu" Click="RemoveNutritionContextMenu_Click" />
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
 
         <Button x:Name="btnAddVehicle" Content="Add New Vehicle" Grid.Column="1" Grid.Row="1" Margin="10,39,603,257" Click="BtnAddVehicle_Click"/>

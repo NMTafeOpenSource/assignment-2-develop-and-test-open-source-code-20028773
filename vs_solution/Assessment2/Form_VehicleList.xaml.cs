@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Assessment2
 {
@@ -55,8 +56,6 @@ namespace Assessment2
         {
             if (lvVehicleList.SelectedItem != null)
             {
-                //Form_Vehicle form_Vehicle = new Form_Vehicle((Vehicle)lvVehicleList.SelectedItem);
-                //form_Vehicle.ShowDialog();
                 Form_VehicleInformation form_VehicleInformation = new Form_VehicleInformation((Vehicle)lvVehicleList.SelectedItem);
                 form_VehicleInformation.ShowDialog();
                 UpdateList();
@@ -70,6 +69,26 @@ namespace Assessment2
                 Button button = sender as Button;
                 Vehicle vehicleItem = button.DataContext as Vehicle;
                 new Service().recordService(vehicleItem.Id);
+                UpdateList();
+            }
+        }
+        
+        private void EditNutritionContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveNutritionContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnPurchaseFuel_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvVehicleList.SelectedItem != null)
+            {
+                Form_FuelPurchase form_FuelPurchase = new Form_FuelPurchase((Vehicle)lvVehicleList.SelectedItem);
+                form_FuelPurchase.ShowDialog();
                 UpdateList();
             }
         }
