@@ -26,8 +26,13 @@ namespace Assessment2
 
             this.vehicleId = vehicleId;
             lastServiceOdometerKm = odometer;
-            serviceCount = getServiceCount() + 1;
+            serviceCount = GetServiceCount() + 1;
             lastServiceDate = DateTime.Now;
+        }
+
+        public static double GetKmSinceLastService(Vehicle v)
+        {
+            return (v.OdometerReading - serviceList.Where(x => x.vehicleId == v.Id).LastOrDefault().lastServiceOdometerKm);
         }
 
         // return the last service
@@ -50,11 +55,16 @@ namespace Assessment2
         }
 
         // return how many services the car has had
-        public int getServiceCount()
+        public static int StaticGetServiceCount(int vId)
+        {
+            return new Service().GetServiceCount(vId);
+        }
+
+        public int GetServiceCount(int vId = 0)
         {
             var count = 0;
 
-            var sList = serviceList.Where(x => x.vehicleId == vehicleId).ToList();
+            var sList = serviceList.Where(x => x.vehicleId == ((vId == 0) ? vehicleId : vId)).ToList();
 
             if (sList.Count > 0)
             {
