@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Assessment2
 {
@@ -19,9 +7,27 @@ namespace Assessment2
     /// </summary>
     public partial class Form_FuelPurchase : Window
     {
-        public Form_FuelPurchase()
+        Vehicle vehicle = new Vehicle();
+
+        public Form_FuelPurchase(Vehicle v)
         {
             InitializeComponent();
+
+            txtVehicle.Text = v.vehicleDescription;
+            txtOdometer.Text = v.OdometerReading.ToString();
+            vehicle = v;
+        }
+
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            FuelPurchase.AddPurchaseFuel(vehicle.Id, double.Parse(txtOdometer.Text), double.Parse(txtQuantity.Text), double.Parse(txtPrice.Text));
+
+            this.Close();
         }
     }
 }
