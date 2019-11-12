@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assessment2
 {
@@ -21,9 +22,20 @@ namespace Assessment2
         [JsonIgnore]
         public static List<FuelPurchase> fuelList { get { return _fuelList; } }
 
-        public double getFuelEconomy()
+        public static double GetFuelEconomy(int vehicheId)
         {
-            return _fuelEconomy;
+            var list = _fuelList.Where(x => x.vehicleId == vehicheId).ToList();
+
+            double totalFuel = 0.0;
+            double totalKM = 0.0;
+
+            if (list.Count > 0)
+            {
+                totalFuel = list.Sum(s => s.quantity);
+                totalKM = list.Max(m => m.odometerReading) - list.Min(m => m.odometerReading);
+            }
+
+            return totalKM / totalFuel;
             //return this.cost / this.litres;
         }
 
@@ -36,18 +48,31 @@ namespace Assessment2
         {
             _fuelEconomy = fuelEconomy;
         }
+
         public void purchaseFuel(double amount, double price)
         {
             _litres += amount;
             _cost += price;
         }
 
-        public void purchaseFuel(int vehicleId, double quantity, double price)
-        {
-            List<Service> serviceList = Service.serviceList;
-            serviceList.Add(new Service(vehicleId));
 
-            JsonData.Save(serviceList);
+        public FuelPurchase(int vehicleId, double odometer, double quantity, double price)
+        {
+            this.vehicleId = vehicleId;
+            this.odometerReading = odometer;
+            this.quantity = quantity;
+            this.price = price;
+            this.purchaseDate = DateTime.Now;
+        }
+
+        public static void AddPurchaseFuel(int vehicleId, double odometer, double quantity, double price)
+        {
+            List<FuelPurchase> fList = _fuelList;
+            fList.Add(new FuelPurchase(vehicleId, odometer, quantity, price));
+
+            JsonData.Save(fList);
+
+            Vehicle.UpdateOdometer(vehicleId, odometer);
         }
 
         public static List<FuelPurchase> Load()
