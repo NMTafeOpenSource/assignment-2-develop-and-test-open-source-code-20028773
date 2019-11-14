@@ -25,9 +25,17 @@ namespace Assessment2
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            FuelPurchase.AddPurchaseFuel(vehicle.Id, double.Parse(txtOdometer.Text), double.Parse(txtQuantity.Text), double.Parse(txtPrice.Text));
+            string sMessage = FuelPurchase.AddPurchaseFuel(vehicle, double.Parse(txtOdometer.Text), double.Parse(txtQuantity.Text), double.Parse(txtPrice.Text));
 
-            this.Close();
+            if (string.IsNullOrEmpty(sMessage))
+            {
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show(sMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
     }
 }

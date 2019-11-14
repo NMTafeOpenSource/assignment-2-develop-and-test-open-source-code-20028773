@@ -8,9 +8,10 @@ namespace Assessment2
     /// </summary>
     public partial class Form_Rental : Window
     {
-
         private int vehicleId;
         private int rentalId;
+        private double dEndOdometer;
+        private DateTime? dtEndDate = null;
 
         public void initialize()
         {
@@ -39,7 +40,11 @@ namespace Assessment2
 
             btnSave.Content = "Finalize Booking";
             btnSave.Width = 100;
-            btnSave.Margin = new Thickness(70,0,0,0);
+            btnSave.Margin = new Thickness(70, 0, 0, 0);
+
+            dpStartDate.IsEnabled = false;
+            txtEndOdometer.IsEnabled = true;
+            dpEndDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
         }
 
         public Form_Rental(int vId, string vDescription, double odometer)
@@ -49,27 +54,80 @@ namespace Assessment2
             vehicleId = vId;
             txtVehicle.Text = vDescription;
             txtStartOdometer.Text = odometer.ToString();
+
+            dpStartDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
+        }
+
+        public string validate()
+        {
+            if (string.IsNullOrEmpty(txtCustomer.Text))
+            {
+                return "Customer Required";
+            }
+
+            if (cbRentType.SelectedItem == null)
+            {
+                return "Rent Type Required";
+            }
+
+            if (!string.IsNullOrEmpty(dpEndDate.Text))
+            {
+                DateTime startDate = DateTime.Parse(dpStartDate.Text);
+                dtEndDate = DateTime.Parse(dpEndDate.Text);
+
+                if (startDate > dtEndDate)
+                {
+                    return "Start Date can't be after End Date";
+                }
+            }
+
+            if (txtEndOdometer.IsEnabled)
+            {
+                try
+                {
+                    dEndOdometer = double.Parse(txtEndOdometer.Text.Replace("_", ""));
+                }
+                catch
+                {
+                    return "Invalid End Odometer";
+                }
+            }
+
+            return "";
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+
+            string sMessage = validate();
+
+            if (!string.IsNullOrEmpty(sMessage))
+            {
+                MessageBox.Show(sMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             Rental.type rentaltype = cbRentType.SelectedItem.ToString() == Rental.type.Day.ToString() ? Rental.type.Day : Rental.type.KM;
 
             if (((System.Windows.Controls.ContentControl)sender).Content.ToString() == "Save")
             {
-                new Rental().AddRental( vehicleId,
-                                        txtCustomer.Text,
-                                        rentaltype,
-                                        double.Parse(txtStartOdometer.Text),
-                                        double.Parse(!string.IsNullOrEmpty(txtEndOdometer.Text) ? txtEndOdometer.Text : "0"),
-                                        DateTime.Parse(dpStartDate.Text),
-                                        DateTime.Parse(dpEndDate.Text),
-                                        txtNotes.Text,
-                                        0);
+                Rental.AddRental(vehicleId,
+                                    txtCustomer.Text,
+                                    rentaltype,
+                                    double.Parse(txtStartOdometer.Text),
+                                    DateTime.Parse(dpStartDate.Text),
+                                    dtEndDate,
+                                    txtNotes.Text);
             }
             else
             {
-                new Rental().FinalizeRental(rentalId, double.Parse(txtEndOdometer.Text), DateTime.Parse(dpEndDate.Text), txtNotes.Text);
+                sMessage = Rental.FinalizeRental(rentalId, dEndOdometer, dtEndDate.Value, txtNotes.Text);
+            }
+
+            if (!string.IsNullOrEmpty(sMessage))
+            {
+                MessageBox.Show(sMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             this.Close();
