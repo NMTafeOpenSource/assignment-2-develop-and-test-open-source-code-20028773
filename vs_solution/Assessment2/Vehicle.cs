@@ -86,12 +86,9 @@ namespace Assessment2
         }
 
         private static List<Vehicle> _vehicleList { get { return Load(); } }
-        //private static List<Vehicle> _vehicleList { get { return MainWindow.vehicleList; } }
 
         [JsonIgnore]
         public static List<Vehicle> vehicleList { get { return _vehicleList; } }
-
-        //private FuelPurchase fuelPurchase;
 
         public Vehicle() { }
 
@@ -112,11 +109,9 @@ namespace Assessment2
             OdometerReading = odometerReading;
             TankCapacity = tankCapacity;
             ModifiedDate = DateTime.Now;
-
-            //fuelPurchase = new FuelPurchase();
         }
-
-        public void AddVehicle(string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
+        
+        public static void AddVehicle(string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
         {
             List<Vehicle> vehicleList = _vehicleList;
 
@@ -129,7 +124,7 @@ namespace Assessment2
             new Service().recordService(vId);
         }
 
-        public void EditVehicle(int id, string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
+        public static void EditVehicle(int id, string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
         {
             List<Vehicle> vehicleList = _vehicleList;
 
@@ -148,21 +143,25 @@ namespace Assessment2
             JsonData.Save(vehicleList);
         }
 
-        public static void UpdateOdometer(int id, double odometerReading)
+        public static string UpdateOdometer(int vehicleId, double newOdometerReading)
         {
             List<Vehicle> vehicleList = _vehicleList;
 
-            Vehicle v = vehicleList.Where(x => x.Id == id).FirstOrDefault();
+            Vehicle v = vehicleList.Where(x => x.Id == vehicleId).FirstOrDefault();
 
-            if (odometerReading > v.OdometerReading)
+            if (newOdometerReading < v.OdometerReading)
             {
-                v.OdometerReading = odometerReading;
-                v.ModifiedDate = DateTime.Now;
-
-                vehicleList.ToArray().SetValue(v, 0);
-
-                JsonData.Save(vehicleList);
+                return "New Odometer is lower than actual";
             }
+
+            v.OdometerReading = newOdometerReading;
+            v.ModifiedDate = DateTime.Now;
+
+            vehicleList.ToArray().SetValue(v, 0);
+
+            JsonData.Save(vehicleList);
+
+            return "";
         }
 
         public static void DeleteVehicle(Vehicle v)
@@ -191,7 +190,7 @@ namespace Assessment2
             sAux2.AppendLine();
             sAux2.AppendFormat("Revenue recorded: {0:C}", Rental.GetTotalRevenue(v.Id));
             sAux2.AppendLine();
-            sAux2.AppendFormat("Kilometres since last service: {0} km", Service.GetKmSinceLastService(v));
+            sAux2.AppendFormat("Kilometres since last service: {0:#,###0} km", Service.GetKmSinceLastService(v));
             sAux2.AppendLine();
             sAux2.AppendFormat("Fuel economy: {0:C}", FuelPurchase.GetFuelEconomy(v.Id));
             sAux2.AppendLine();
