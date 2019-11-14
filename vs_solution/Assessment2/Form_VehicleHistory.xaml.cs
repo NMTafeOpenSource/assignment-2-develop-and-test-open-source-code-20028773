@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Assessment2
 {
@@ -19,9 +8,26 @@ namespace Assessment2
     /// </summary>
     public partial class Form_VehicleHistory : Window
     {
-        public Form_VehicleHistory()
+        public Form_VehicleHistory(Vehicle v)
         {
             InitializeComponent();
+
+            txtManufacturer.Text = v.Manufacturer;
+            txtModel.Text = v.Model;
+            txtRegistration.Text = v.RegistrationNumber;
+            txtYear.Text = v.MakeYear.ToString();
+            txtOdometer.Text = v.OdometerReading.ToString();
+            txtTank.Text = v.TankCapacity.ToString();
+
+
+            lvRentHistory.ItemsSource = Rental.rentalList.Where(x => x.vehicleId == v.Id && x.totalPrice > 0);
+            lvRentHistory.Items.Refresh();
+
+            lvServiceHistory.ItemsSource = Service.serviceList.Where(x => x.vehicleId == v.Id);
+            lvServiceHistory.Items.Refresh();
+
+            lvFuelHistory.ItemsSource = FuelPurchase.fuelList.Where(x => x.vehicleId == v.Id);
+            lvFuelHistory.Items.Refresh();
         }
     }
 }
