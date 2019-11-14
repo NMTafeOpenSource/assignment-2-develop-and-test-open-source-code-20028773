@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
-        Title="Form_VehicleList" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+        Title="Form_VehicleList" Height="400" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+    <Window.Resources>
+        <Style TargetType="ListViewItem" >
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -14,16 +19,13 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <ListView x:Name="lvVehicleList" 
-                  HorizontalAlignment="Center" 
-                  Height="252"                   
-                  VerticalAlignment="Bottom" 
-                  Width="730"
-                  Grid.Column="1" Grid.Row="1"
+                  Grid.Column="1" Grid.Row="2"
                   MouseDoubleClick="LvVehicleList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
@@ -49,8 +51,8 @@
 
                     <GridViewColumn 
                             Header="Odometer" 
-                            Width="120" 
-                            DisplayMemberBinding="{Binding OdometerReading}" />
+                            Width="100" 
+                            DisplayMemberBinding="{Binding OdometerReading, StringFormat='{}{0:#,##0} km'}"/>
 
                     <GridViewColumn 
                             Header="Status" 
@@ -107,11 +109,12 @@
                     </ContextMenu.BitmapEffect>
                     <MenuItem Header="Edit" Name="EditNutritionContextMenu"  Click="EditNutritionContextMenu_Click"/>
                     <MenuItem Header="Purchase Fuel" Name="btnPurchaseFuel"  Click="BtnPurchaseFuel_Click"/>
+                    <MenuItem Header="History" Name="btnHistory"  Click="BtnHistory_Click"/>
                     <MenuItem Header="Remove" Name="RemoveNutritionContextMenu" Click="RemoveNutritionContextMenu_Click" />
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
 
-        <Button x:Name="btnAddVehicle" Content="Add New Vehicle" Grid.Column="1" Grid.Row="1" Margin="10,39,603,257" Click="BtnAddVehicle_Click"/>
+        <Button x:Name="btnAddVehicle" Content="Add New Vehicle" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,5" Height="30" Click="BtnAddVehicle_Click"/>
     </Grid>
 </Window>

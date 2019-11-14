@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
         Title="Form_Rental" Height="300" Width="600" WindowStartupLocation="CenterScreen">
@@ -46,7 +47,7 @@
         <Label Content="Start Odometer:" Grid.Column="4" Grid.Row="3"/>
         <TextBox x:Name="txtStartOdometer" Grid.Column="5" Grid.Row="3" Width="150" Height="25" IsEnabled="False"/>
         <Label Content="End Odometer:" Grid.Column="4" Grid.Row="4"/>
-        <TextBox x:Name="txtEndOdometer" Grid.Column="5" Grid.Row="4" Width="150" Height="25"/>
+        <xctk:MaskedTextBox x:Name="txtEndOdometer" Grid.Column="5" Grid.Row="4" Width="150" Height="25" IsEnabled="False" Mask="9999999"/>
 
         <Label Content="Notes:" Grid.Column="1" Grid.Row="5"/>
         <TextBox x:Name="txtNotes" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="4" />

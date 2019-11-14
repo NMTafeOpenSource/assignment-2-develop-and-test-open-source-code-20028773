@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
         Title="Form_RentalList" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style TargetType="ListViewItem" >
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -14,16 +19,13 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <ListView x:Name="lvRentalList" 
-                  HorizontalAlignment="Center" 
-                  Height="252"                   
-                  VerticalAlignment="Bottom" 
-                  Width="730"
-                  Grid.Column="1" Grid.Row="1"
+                  Grid.Column="1" Grid.Row="2"
                   MouseDoubleClick="LvRentalList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
@@ -45,26 +47,16 @@
                     <GridViewColumn 
                             Header="Start Date" 
                             Width="80" 
-                            DisplayMemberBinding="{Binding startDateToString}" />
+                            DisplayMemberBinding="{Binding startDate, StringFormat='{}{0:dd/MM/yyyy}'}" />
 
                     <GridViewColumn 
                             Header="Price" 
-                            Width="50" 
-                            DisplayMemberBinding="{Binding totalPrice}" />
+                            Width="70" 
+                            DisplayMemberBinding="{Binding totalPrice, StringFormat='{}{0:C}'}" />
                     <GridViewColumn 
                             Header="Notes" 
-                            Width="230" 
+                            Width="200" 
                             DisplayMemberBinding="{Binding notes}" />
-
-                    <!--<GridViewColumn 
-                            Header="Odometer" 
-                            Width="120" 
-                            DisplayMemberBinding="{Binding OdometerReading}" />
-
-                    <GridViewColumn 
-                            Header="Tank Capacity" 
-                            Width="120" 
-                            DisplayMemberBinding="{Binding TankCapacity}" />-->
 
                     <GridViewColumn 
                             Header="Actions"

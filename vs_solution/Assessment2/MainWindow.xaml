@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="ListViewItem" >
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -20,7 +25,7 @@
                 <MenuItem Header="_Copy" />
                 <MenuItem Header="_Paste" />
             </MenuItem>
-            
+
             <MenuItem x:Name="miRents" Header="Rent" Click="MiRents_Click" />
             <MenuItem x:Name="miVehicles" Header="Vehicles" Click="MiVehicles_Click" />
 
@@ -70,12 +75,12 @@
                         <GridViewColumn 
                             Header="Odometer" 
                             Width="120" 
-                            DisplayMemberBinding="{Binding OdometerReading}" />
+                            DisplayMemberBinding="{Binding OdometerReading, StringFormat='{}{0:#,##0} km'}" />
 
                         <GridViewColumn 
                             Header="Tank Capacity" 
-                            Width="120" 
-                            DisplayMemberBinding="{Binding TankCapacity}" />
+                            Width="90" 
+                            DisplayMemberBinding="{Binding TankCapacity, StringFormat='{}{0} L'}" />
 
                         <GridViewColumn 
                             Header="Actions"
