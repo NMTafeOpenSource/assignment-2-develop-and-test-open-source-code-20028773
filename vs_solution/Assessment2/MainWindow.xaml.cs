@@ -50,14 +50,7 @@ namespace Assessment2
             Button button = sender as Button;
             Vehicle vehicleItem = button.DataContext as Vehicle;
 
-            //new Rental().AddRental( vehicleItem.Id, "Koji Furukawa", Rental.type.Day, 0, 0, DateTime.Now, DateTime.Now, null, 0);
-
             UpdateList();
-
-
-            //Form_Vehicle form_Vehicle = new Form_Vehicle(vehicleItem);
-            //form_Vehicle.ShowDialog();
-            //UpdateList();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

@@ -35,10 +35,6 @@ namespace Assessment2
                     loadList = (List<T>)serializer.Deserialize(file, typeof(List<T>));
                 }
             }
-            //else
-            //{
-            //    companyList.Add(new CompanyClass(1, "Sample Company", "Sample Address", " Sampe City", "Sample Contact", "0123123456", "WA", "6000", "Australia", "sample@email.com", "www.google.com", DateTime.Now));
-            //}
 
             return loadList;
         }

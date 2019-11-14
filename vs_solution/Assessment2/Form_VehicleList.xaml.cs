@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Assessment2
 {
@@ -9,9 +8,6 @@ namespace Assessment2
     /// </summary>
     public partial class Form_VehicleList : Window
     {
-        //private Vehicle vehicle = new Vehicle();
-        //public static List<Vehicle> vehicleList;
-
         public Form_VehicleList()
         {
             InitializeComponent();
@@ -72,7 +68,7 @@ namespace Assessment2
                 UpdateList();
             }
         }
-        
+
         private void EditNutritionContextMenu_Click(object sender, RoutedEventArgs e)
         {
 
@@ -89,6 +85,16 @@ namespace Assessment2
             {
                 Form_FuelPurchase form_FuelPurchase = new Form_FuelPurchase((Vehicle)lvVehicleList.SelectedItem);
                 form_FuelPurchase.ShowDialog();
+                UpdateList();
+            }
+        }
+
+        private void BtnHistory_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvVehicleList.SelectedItem != null)
+            {
+                Form_VehicleHistory form_VehicleHistory = new Form_VehicleHistory((Vehicle)lvVehicleList.SelectedItem);
+                form_VehicleHistory.ShowDialog();
                 UpdateList();
             }
         }
