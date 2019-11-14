@@ -65,14 +65,26 @@ namespace Assessment2
             this.purchaseDate = DateTime.Now;
         }
 
-        public static void AddPurchaseFuel(int vehicleId, double odometer, double quantity, double price)
+        public static string AddPurchaseFuel(Vehicle vehicle, double odometer, double quantity, double price)
         {
+            if (vehicle.TankCapacity < quantity)
+            {
+                return "Quantity is higher than tank capacity";
+            }
+
+            string sMessage = Vehicle.UpdateOdometer(vehicle.Id, odometer);
+
+            if (!string.IsNullOrEmpty(sMessage))
+            {
+                return sMessage;
+            }
+
             List<FuelPurchase> fList = _fuelList;
-            fList.Add(new FuelPurchase(vehicleId, odometer, quantity, price));
+            fList.Add(new FuelPurchase(vehicle.Id, odometer, quantity, price));
 
             JsonData.Save(fList);
 
-            Vehicle.UpdateOdometer(vehicleId, odometer);
+            return "";
         }
 
         public static List<FuelPurchase> Load()
