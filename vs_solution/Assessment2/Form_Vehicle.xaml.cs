@@ -23,11 +23,14 @@ namespace Assessment2
             InitializeComponent();
 
             txtManufacturer.Focus();
+            this.Title = "Add Vehicle";
         }
 
         public Form_Vehicle(Vehicle updateVehicle)
         {
             InitializeComponent();
+
+            this.Title = "Edit Vehicle";
 
             txtManufacturer.Focus();
 

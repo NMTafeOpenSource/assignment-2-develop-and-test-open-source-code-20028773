@@ -114,9 +114,36 @@ namespace Assessment2
             return rentalList.Where(x => x.vehicleId == vehicheId).Sum(t => t.totalPrice);
         }
 
-        public static List<Vehicle> GetAvailableVehicles()
+        public static List<Vehicle> GetAvailableVehicles(string sFilter = "")
         {
-            return Vehicle.vehicleList.Where(x => x.Status == Vehicle.statusType.Available).ToList();
+            List<Vehicle> list = Vehicle.vehicleList.Where(x => x.Status == Vehicle.statusType.Available).ToList(); 
+
+            if (!string.IsNullOrEmpty(sFilter))
+            {
+                list = list.Where(x => x.Manufacturer.ToUpper().Contains(sFilter.ToUpper())
+                                    || x.Model.ToUpper().Contains(sFilter.ToUpper())
+                                    || x.RegistrationNumber.ToUpper().Contains(sFilter.ToUpper())).ToList();
+            }
+
+            return list;
+        }
+
+        public static List<Rental> getRentalList(string sFilter = "", bool bFinalized = false)
+        {
+            List<Rental> list = rentalList;
+
+            if (!string.IsNullOrEmpty(sFilter))
+            {
+                list = list.Where(x => x.customerName.ToUpper().Contains(sFilter.ToUpper())
+                                    || x.vehicleDescription.ToUpper().Contains(sFilter.ToUpper())).ToList();
+            }
+
+            if (!bFinalized)
+            {
+                list = list.Where(x => x.totalPrice == 0).ToList();
+            }
+
+            return list;
         }
 
         public static List<Rental> Load()

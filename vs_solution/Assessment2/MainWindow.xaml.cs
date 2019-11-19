@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Assessment2
@@ -17,7 +18,7 @@ namespace Assessment2
 
         public void UpdateList()
         {
-            lvRentVehicleList.ItemsSource = Rental.GetAvailableVehicles();
+            lvRentVehicleList.ItemsSource = Rental.GetAvailableVehicles(txtFilter.Text);
             lvRentVehicleList.Items.Refresh();
         }
 
@@ -62,6 +63,11 @@ namespace Assessment2
         {
             Form_RentalList form_RentalList = new Form_RentalList();
             form_RentalList.ShowDialog();
+            UpdateList();
+        }
+
+        private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
             UpdateList();
         }
     }

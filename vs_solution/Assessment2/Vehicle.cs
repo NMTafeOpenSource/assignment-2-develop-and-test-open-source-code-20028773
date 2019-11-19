@@ -121,7 +121,7 @@ namespace Assessment2
 
             JsonData.Save(vehicleList);
 
-            new Service().recordService(vId);
+            Service.recordService(vId);
         }
 
         public static void EditVehicle(int id, string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
@@ -192,7 +192,18 @@ namespace Assessment2
             sAux2.AppendLine();
             sAux2.AppendFormat("Kilometres since last service: {0:#,###0} km", Service.GetKmSinceLastService(v));
             sAux2.AppendLine();
-            sAux2.AppendFormat("Fuel economy: {0:C}", FuelPurchase.GetFuelEconomy(v.Id));
+
+            double economy = FuelPurchase.GetFuelEconomy(v.Id);
+
+            if (economy > 0)
+            {
+                sAux2.AppendFormat("Fuel economy: {0:#,###0} km/L", economy);
+            }
+            else
+            {
+                sAux2.AppendFormat("Fuel economy: Not Available");
+            }
+
             sAux2.AppendLine();
             sAux2.AppendFormat("Requires a service: {0}", v.Status == statusType.NeedService ? "Yes" : "No");
             sAux2.AppendLine();
@@ -228,12 +239,4 @@ namespace Assessment2
             return e.ToString();
         }
     }
-
-    ///TODO
-    ///DONT LET PURCHASE FUEL IF THE QUANTITY > TANK
-    ///CREATE FORM VALIDATIONS FOR ALL FORMS
-    ///CREATE HISTORY PAGE FOR VEHICLE WITH SERVICES, FUEL AND RENT
-    ///TIDE THE FORMS
-    ///CORRECT THE FUEL ECONOMY DISPLAY
-
 }

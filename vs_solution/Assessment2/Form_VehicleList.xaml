@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
-        Title="Form_VehicleList" Height="400" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+        Title="Vehicles" Height="400" Width="750" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
     <Window.Resources>
         <Style TargetType="ListViewItem" >
             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -31,7 +31,7 @@
                 <GridView>
                     <GridViewColumn 
                             Header="Manufacturer" 
-                            Width="100" 
+                            Width="110" 
                             DisplayMemberBinding="{Binding Manufacturer}" />
 
                     <GridViewColumn 
@@ -61,7 +61,7 @@
 
                     <GridViewColumn 
                             Header="Actions"
-                            Width="100">
+                            Width="50">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -71,12 +71,12 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        <ColumnDefinition Width="4"></ColumnDefinition>
+                                        <!--<ColumnDefinition Width="4"></ColumnDefinition>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="4"></ColumnDefinition>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>-->
                                     </Grid.ColumnDefinitions>
-                                    <Button Click="EditVehicleButton_Click"
+                                    <!--<Button Click="EditVehicleButton_Click"
                                                 Grid.Column="0"
                                                 Height="24" Width="24"
                                                 Content="E"
@@ -87,7 +87,7 @@
                                                 Height="24" Width="24"
                                                 Content="D"
                                                 Background="IndianRed">
-                                    </Button>
+                                    </Button>-->
                                     <Button Click="ServiceVehicleButton_Click"
                                                 Grid.Column="4"
                                                 Height="24" Width="24"
@@ -107,14 +107,17 @@
                     <ContextMenu.BitmapEffect>
                         <BitmapEffectGroup/>
                     </ContextMenu.BitmapEffect>
-                    <MenuItem Header="Edit" Name="EditNutritionContextMenu"  Click="EditNutritionContextMenu_Click"/>
+                    <MenuItem Header="Edit" Name="EditContextMenu"  Click="EditVehicleButton_Click"/>
                     <MenuItem Header="Purchase Fuel" Name="btnPurchaseFuel"  Click="BtnPurchaseFuel_Click"/>
                     <MenuItem Header="History" Name="btnHistory"  Click="BtnHistory_Click"/>
-                    <MenuItem Header="Remove" Name="RemoveNutritionContextMenu" Click="RemoveNutritionContextMenu_Click" />
+                    <MenuItem Header="Delete" Name="DeleteContextMenu" Click="DeleteVehicleButton_Click" />
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
 
         <Button x:Name="btnAddVehicle" Content="Add New Vehicle" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,5" Height="30" Click="BtnAddVehicle_Click"/>
+
+        <Label Content="Filter: " Grid.Column="1" Grid.Row="1" Width="70" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,150,0"/>
+        <TextBox x:Name="txtFilter" Grid.Column="1" Grid.Row="1" Width="150" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,00,5" TextChanged="TxtFilter_TextChanged"/>
     </Grid>
 </Window>

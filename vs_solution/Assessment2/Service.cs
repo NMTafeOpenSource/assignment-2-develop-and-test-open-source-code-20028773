@@ -46,7 +46,7 @@ namespace Assessment2
          * saves it and increase serviceCount.
          * @param distance 
          */
-        public void recordService(int vehicleId)
+        public static void recordService(int vehicleId)
         {
             List<Service> sList = serviceList;
             sList.Add(new Service(vehicleId));

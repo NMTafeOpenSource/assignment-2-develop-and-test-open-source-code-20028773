@@ -18,6 +18,8 @@ namespace Assessment2
             InitializeComponent();
             cbRentType.Items.Add(Rental.type.Day);
             cbRentType.Items.Add(Rental.type.KM);
+
+            this.Title = "New Rental";
         }
 
         public Form_Rental()
@@ -28,6 +30,7 @@ namespace Assessment2
         public Form_Rental(Rental rental)
         {
             initialize();
+            this.Title = "Finalize Rental";
 
             rentalId = rental.Id;
             txtCustomer.Text = rental.customerName;

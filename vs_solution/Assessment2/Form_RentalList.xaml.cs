@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace Assessment2
@@ -40,8 +39,24 @@ namespace Assessment2
 
         public void UpdateList()
         {
-            lvRentalList.ItemsSource = Rental.rentalList;
+            lvRentalList.ItemsSource = Rental.getRentalList(txtFilter.Text, cbFinalized.IsChecked.Value);
             lvRentalList.Items.Refresh();
+        }
+
+
+        private void TxtFilter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            UpdateList();
+        }
+
+        private void CbFinalized_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateList();
+        }
+
+        private void CbFinalized_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateList();
         }
     }
 }

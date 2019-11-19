@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="400" Width="700" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="ListViewItem" >
             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -39,22 +39,19 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <ListView x:Name="lvRentVehicleList" 
-                  HorizontalAlignment="Center" 
-                  Height="250"                   
-                  VerticalAlignment="Bottom" 
-                  Width="730"
-                  Grid.Column="1" Grid.Row="1"
+                  Grid.Column="1" Grid.Row="2"
                   MouseDoubleClick="LvRentVehicleList_MouseDoubleClick">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn 
                             Header="Manufacturer" 
-                            Width="100" 
+                            Width="120" 
                             DisplayMemberBinding="{Binding Manufacturer}" />
 
                         <GridViewColumn 
@@ -79,45 +76,16 @@
 
                         <GridViewColumn 
                             Header="Tank Capacity" 
-                            Width="90" 
-                            DisplayMemberBinding="{Binding TankCapacity, StringFormat='{}{0} L'}" />
-
-                        <GridViewColumn 
-                            Header="Actions"
-                            Width="90">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"></RowDefinition>
-                                            <RowDefinition Height="auto"></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                                            <ColumnDefinition Width="4"></ColumnDefinition>
-                                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Button Click="Button_Click"
-                                                Grid.Column="0"
-                                                Height="24" Width="24"
-                                                Content="E"
-                                                Background="Green">
-                                        </Button>
-                                        <Button Click="Button_Click_1"
-                                                Grid.Column="2"
-                                                Height="24" Width="24"
-                                                Content="D"
-                                                Background="IndianRed">
-                                        </Button>
-                                    </Grid>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                            Width="100" 
+                            DisplayMemberBinding="{Binding TankCapacity, StringFormat='{}{0} L'}" />                       
                     </GridView>
                 </ListView.View>
             </ListView>
 
+            <Label Content="Filter: " Grid.Column="1" Grid.Row="1" Width="70" Height="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,150,0"/>
+            <TextBox x:Name="txtFilter" Grid.Column="1" Grid.Row="1" Width="150" Height="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,00,5" TextChanged="TxtFilter_TextChanged"/>
         </Grid>
+
     </DockPanel>
 
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Assessment2
@@ -15,9 +16,19 @@ namespace Assessment2
             UpdateList();
         }
 
-        public void UpdateList(int nIndex = 0)
+        public void UpdateList()
         {
-            lvVehicleList.ItemsSource = Vehicle.vehicleList;
+            if (string.IsNullOrEmpty(txtFilter.Text))
+            {
+                lvVehicleList.ItemsSource = Vehicle.vehicleList;
+            }
+            else
+            {
+                lvVehicleList.ItemsSource = Vehicle.vehicleList.Where(x => x.Manufacturer.ToUpper().Contains(txtFilter.Text.ToUpper())
+                                                                        || x.Model.ToUpper().Contains(txtFilter.Text.ToUpper())
+                                                                        || x.RegistrationNumber.ToUpper().Contains(txtFilter.Text.ToUpper()));
+            }
+
             lvVehicleList.Items.Refresh();
         }
 
@@ -25,20 +36,22 @@ namespace Assessment2
         {
             if (MessageBox.Show("This will erase the vehicle from the database, do you still want to continue ?", "Vehicle", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                Button button = sender as Button;
-                Vehicle vehicleItem = button.DataContext as Vehicle;
-                Vehicle.DeleteVehicle(vehicleItem);
-                UpdateList();
+                if (lvVehicleList.SelectedItem != null)
+                {
+                    Vehicle.DeleteVehicle((Vehicle)lvVehicleList.SelectedItem);
+                    UpdateList();
+                }
             }
         }
 
         private void EditVehicleButton_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            Vehicle vehicleItem = button.DataContext as Vehicle;
-            Form_Vehicle form_Vehicle = new Form_Vehicle(vehicleItem);
-            form_Vehicle.ShowDialog();
-            UpdateList();
+            if (lvVehicleList.SelectedItem != null)
+            {
+                Form_Vehicle form_Vehicle = new Form_Vehicle((Vehicle)lvVehicleList.SelectedItem);
+                form_Vehicle.ShowDialog();
+                UpdateList();
+            }
         }
 
         private void BtnAddVehicle_Click(object sender, RoutedEventArgs e)
@@ -64,19 +77,9 @@ namespace Assessment2
             {
                 Button button = sender as Button;
                 Vehicle vehicleItem = button.DataContext as Vehicle;
-                new Service().recordService(vehicleItem.Id);
+                Service.recordService(vehicleItem.Id);
                 UpdateList();
             }
-        }
-
-        private void EditNutritionContextMenu_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void RemoveNutritionContextMenu_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void BtnPurchaseFuel_Click(object sender, RoutedEventArgs e)
@@ -97,6 +100,11 @@ namespace Assessment2
                 form_VehicleHistory.ShowDialog();
                 UpdateList();
             }
+        }
+
+        private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateList();
         }
     }
 }

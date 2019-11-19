@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assessment2"
         mc:Ignorable="d"
-        Title="Form_VehicleInformation" Height="260" Width="375" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Vehicle Information" Height="260" Width="375" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
