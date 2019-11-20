@@ -5,11 +5,21 @@ using System.IO;
 
 namespace Assessment2
 {
+    /// <summary>
+    /// JSON CLASS THAT HANDLES THE READING/WRITING DATA TO A JSON FILE
+    /// </summary>
     public static class JsonData
     {
+        /// <summary>
+        /// PATH WHERE THE FILES ARE READ/WRITE
+        /// </summary>
         private static string clusterFolder = "C4Prog-2019S2-TDD";
         private static string dataFolder = "Data";
-
+        /// <summary>
+        /// SAVE A GENERIC LIST INTO A JSON FILE
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="saveList"></param>
         public static void Save<T>(List<T> saveList)
         {
             // serialize JSON to a string and then write string to a file
@@ -20,7 +30,11 @@ namespace Assessment2
                 serializer.Serialize(file, saveList);
             }
         }
-
+        /// <summary>
+        /// RETURN A GENERIC TYPE LIST FROM A JSON FILE
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static List<T> Load<T>()
         {
             //// deserialize JSON directly from a file
@@ -38,7 +52,11 @@ namespace Assessment2
 
             return loadList;
         }
-
+        /// <summary>
+        /// RETURN THE FILE NAME AND CREATE THE FOLDER IF DOESN'T EXISTS
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static string GetFileNamePath(string fileName)
         {
             string sReturn = "";

@@ -5,21 +5,39 @@ using System.Linq;
 
 namespace Assessment2
 {
+    /// <summary>
+    /// CLASS THAT HANDLES THE SERVICE'S OPERATIONS
+    /// </summary>
     public class Service
     {
+        /// <summary>
+        /// CONSTANT FOR HOW MANY KM BEFORE THE CAR NEED A SERVICE
+        /// </summary>
         const double SERVICE_KILOMETER_LIMIT = 10000;
-
+        /// <summary>
+        /// SERVICE MAIN PROPERTIES
+        /// </summary>
         public double lastServiceOdometerKm { get; set; }
         public int serviceCount { get; set; }
         public DateTime lastServiceDate { get; set; }
         public int vehicleId { get; set; }
-
-        private static List<Service> _serviceList { get { return Load(); } }
+        /// <summary>
+        /// MAIN SERVICE LIST - GET IT FROM THE FILE
+        /// </summary>
+        private static List<Service> _serviceList { get { return JsonData.Load<Service>(); } }
+        /// <summary>
+        /// MAIN SERVICE LIST - PUBLIC
+        /// </summary>
         [JsonIgnore]
         public static List<Service> serviceList { get { return _serviceList; } }
-
+        /// <summary>
+        /// CONSTRUCTOR
+        /// </summary>
         public Service() { }
-
+        /// <summary>
+        /// CONSTRUCTOR THAT SET THE SERVICE PROPERTIES
+        /// </summary>
+        /// <param name="vehicleId"></param>
         public Service(int vehicleId)
         {
             double odometer = Vehicle.vehicleList.Where(x => x.Id == vehicleId).Select(f => f.OdometerReading).FirstOrDefault();
@@ -29,23 +47,20 @@ namespace Assessment2
             serviceCount = GetServiceCount() + 1;
             lastServiceDate = DateTime.Now;
         }
-
+        /// <summary>
+        /// RETURN HOW MANY KM SINCE LAST SERVICE
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         public static double GetKmSinceLastService(Vehicle v)
         {
             return (v.OdometerReading - serviceList.Where(x => x.vehicleId == v.Id).LastOrDefault().lastServiceOdometerKm);
         }
 
-        // return the last service
-        public double getLastServiceOdometerKm()
-        {
-            return lastServiceOdometerKm;
-        }
-
-        /**
-         * The function recordService expects the total distance traveled by the car, 
-         * saves it and increase serviceCount.
-         * @param distance 
-         */
+        /// <summary>
+        /// CREATE A NEW SERVICE TO THE VEHICLE
+        /// </summary>
+        /// <param name="vehicleId"></param>
         public static void recordService(int vehicleId)
         {
             List<Service> sList = serviceList;
@@ -54,12 +69,11 @@ namespace Assessment2
             JsonData.Save(sList);
         }
 
-        // return how many services the car has had
-        public static int StaticGetServiceCount(int vId)
-        {
-            return new Service().GetServiceCount(vId);
-        }
-
+        /// <summary>
+        /// RETURN HOW MANY SERVICES THE VEHICLE HAD
+        /// </summary>
+        /// <param name="vId"></param>
+        /// <returns></returns>
         public int GetServiceCount(int vId = 0)
         {
             var count = 0;
@@ -74,17 +88,11 @@ namespace Assessment2
             return count;
         }
 
-        /**
-         * Calculates the total services by dividing kilometers by
-         * {@link #SERVICE_KILOMETER_LIMIT} and floors the value. 
-         * 
-         * @return the number of services needed per SERVICE_KILOMETER_LIMIT
-         */
-        public int getTotalScheduledServices()
-        {
-            return (int)Math.Floor(lastServiceOdometerKm / SERVICE_KILOMETER_LIMIT);
-        }
-
+        /// <summary>
+        /// RETURN IF THE VEHICE IS DUE TO A SERVICE
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <returns></returns>
         public static bool isVehicleDueToService(int vehicleId)
         {
             double nextOdoService = SERVICE_KILOMETER_LIMIT;
@@ -99,11 +107,6 @@ namespace Assessment2
             }
 
             return (actualOdo > nextOdoService);
-        }
-
-        public static List<Service> Load()
-        {
-            return JsonData.Load<Service>();
         }
     }
 }

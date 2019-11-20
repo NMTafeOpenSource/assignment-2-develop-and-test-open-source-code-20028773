@@ -3,12 +3,10 @@
 namespace Assessment2
 {
     /// <summary>
-    /// Interaction logic for Vehicle.xaml
+    /// INTERACTION LOGIC FOR VEHICLE.XAML
     /// </summary>
     public partial class Form_Vehicle : Window
     {
-        Vehicle vehicle = new Vehicle();
-
         private int id = 0;
         private string sManufacturer;
         private string sModel;
@@ -16,8 +14,9 @@ namespace Assessment2
         private string sRegistration;
         private double dOdometer;
         private double dTank;
-
-
+        /// <summary>
+        /// CONSTRUCTOR - CALLED TO CREATE A NEW VEHICLE
+        /// </summary>
         public Form_Vehicle()
         {
             InitializeComponent();
@@ -25,7 +24,10 @@ namespace Assessment2
             txtManufacturer.Focus();
             this.Title = "Add Vehicle";
         }
-
+        /// <summary>
+        /// CONSTRUCTOR - CALLED TO UPDATE THE VEHICLE INFORMATION
+        /// </summary>
+        /// <param name="updateVehicle"></param>
         public Form_Vehicle(Vehicle updateVehicle)
         {
             InitializeComponent();
@@ -43,7 +45,10 @@ namespace Assessment2
             txtOdometer.Text = updateVehicle.OdometerReading.ToString();
             txtTank.Text = updateVehicle.TankCapacity.ToString();
         }
-
+        /// <summary>
+        /// VALIDATE THE FORM FIELDS AND RETURN A ERROR MESSAGE IF NEEDED
+        /// </summary>
+        /// <returns></returns>
         public string validate()
         {
             sManufacturer = txtManufacturer.Text.Replace("_", "");
@@ -111,7 +116,11 @@ namespace Assessment2
 
             return "";
         }
-
+        /// <summary>
+        /// ON THE BTN SAVE CLICK EITHER CREATES A NEW VEHICLE OR UPDATE THE VEHICLE INFORMATION
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             string sMessage = validate();
@@ -136,7 +145,11 @@ namespace Assessment2
                 MessageBox.Show(sMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        /// ON THE BTN CANCEL CLICK CLOSE THE FORM
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

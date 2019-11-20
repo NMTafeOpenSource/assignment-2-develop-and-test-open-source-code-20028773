@@ -5,8 +5,14 @@ using System.Linq;
 
 namespace Assessment2
 {
+    /// <summary>
+    /// CLASS THAT HANDLES THE RENTAL'S OPERATIONS
+    /// </summary>
     public class Rental
     {
+        /// <summary>
+        /// RENTAL MAIN PROPERTIES
+        /// </summary>
         public int Id { get; set; }
         public int vehicleId { get; set; }
         public string customerName { get; set; }
@@ -19,6 +25,9 @@ namespace Assessment2
         public double totalPrice { get; set; }
         public DateTime ModifiedDate { get; set; }
 
+        /// <summary>
+        /// RETURN VEHICLE DESCRIPTION
+        /// </summary>
         [JsonIgnore]
         public string vehicleDescription
         {
@@ -28,13 +37,16 @@ namespace Assessment2
 
                 if (Vehicle.vehicleList != null)
                 {
-                    sAux = Vehicle.vehicleList.Where(x => x.Id == vehicleId).Select(f => f.Manufacturer + " - " + f.Model).FirstOrDefault();
+                    sAux = Vehicle.vehicleList.Where(x => x.Id == vehicleId).Select(f => f.vehicleDescription).FirstOrDefault();
                 }
 
                 return sAux;
             }
         }
 
+        /// <summary>
+        /// RETURN HOW MANY KM THE VEHICLE TRAVELLED
+        /// </summary>
         [JsonIgnore]
         public double travelledDistance
         {
@@ -43,20 +55,40 @@ namespace Assessment2
                 return (endOdometer - startOdometer);
             }
         }
-
-        private static List<Rental> _rentalList { get { return Load(); } }
-
+        /// <summary>
+        /// MAIN RENTAL LIST - GET IT FROM THE FILE
+        /// </summary>
+        private static List<Rental> _rentalList { get { return JsonData.Load<Rental>(); } }
+        /// <summary>
+        /// MAIN RENTAL LIST - PUBLIC
+        /// </summary>
         [JsonIgnore]
         public static List<Rental> rentalList { get { return _rentalList; } }
-
+        /// <summary>
+        /// RENTAY TYPES
+        /// </summary>
         public enum type
         {
             Day,
             KM
         }
-
+        /// <summary>
+        /// CONSTRUCTOR
+        /// </summary>
         public Rental() { }
-
+        /// <summary>
+        /// CONSTRUCTOR THAT SET THE RENTAL PROPERTIES
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="vehicleId"></param>
+        /// <param name="customerName"></param>
+        /// <param name="rentType"></param>
+        /// <param name="startOdometer"></param>
+        /// <param name="endOdometer"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="notes"></param>
+        /// <param name="totalPrice"></param>
         public Rental(int id, int vehicleId, string customerName, type rentType, double startOdometer, double endOdometer, DateTime startDate, DateTime? endDate, string notes, double totalPrice)
         {
             this.Id = id;
@@ -71,14 +103,30 @@ namespace Assessment2
             this.totalPrice = totalPrice;
             this.ModifiedDate = DateTime.Now;
         }
-
+        /// <summary>
+        /// CREATE A NEW RENTAL AND ADD TO THE LIST
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <param name="customerName"></param>
+        /// <param name="rentType"></param>
+        /// <param name="startOdometer"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="notes"></param>
         public static void AddRental(int vehicleId, string customerName, type rentType, double startOdometer, DateTime startDate, DateTime? endDate, string notes)
         {
             List<Rental> rentalList = _rentalList;
             rentalList.Add(new Rental((rentalList.Count > 0 ? rentalList.Last().Id + 1 : 1), vehicleId, customerName, rentType, startOdometer, 0, startDate, endDate, notes, 0));
             JsonData.Save(rentalList);
         }
-
+        /// <summary>
+        /// FINALIZE THE RENTAL
+        /// </summary>
+        /// <param name="rentalId"></param>
+        /// <param name="endOdometer"></param>
+        /// <param name="endDate"></param>
+        /// <param name="notes"></param>
+        /// <returns></returns>
         public static string FinalizeRental(int rentalId, double endOdometer, DateTime endDate, string notes)
         {
             List<Rental> rentalList = _rentalList;
@@ -108,15 +156,23 @@ namespace Assessment2
 
             return "";
         }
-
+        /// <summary>
+        /// RETURN THE TOTAL AMOUNT THAT THE VEHICLE MADE
+        /// </summary>
+        /// <param name="vehicheId"></param>
+        /// <returns></returns>
         public static double GetTotalRevenue(int vehicheId)
         {
             return rentalList.Where(x => x.vehicleId == vehicheId).Sum(t => t.totalPrice);
         }
-
+        /// <summary>
+        /// RETURN A LIST WITH THE VEHICLES THAT CAN BE RENTED
+        /// </summary>
+        /// <param name="sFilter"></param>
+        /// <returns></returns>
         public static List<Vehicle> GetAvailableVehicles(string sFilter = "")
         {
-            List<Vehicle> list = Vehicle.vehicleList.Where(x => x.Status == Vehicle.statusType.Available).ToList(); 
+            List<Vehicle> list = Vehicle.vehicleList.Where(x => x.Status == Vehicle.statusType.Available).ToList();
 
             if (!string.IsNullOrEmpty(sFilter))
             {
@@ -127,7 +183,12 @@ namespace Assessment2
 
             return list;
         }
-
+        /// <summary>
+        /// RETURN A RENTAL LIST ACCORDING TO THE FILTERS
+        /// </summary>
+        /// <param name="sFilter"></param>
+        /// <param name="bFinalized"></param>
+        /// <returns></returns>
         public static List<Rental> getRentalList(string sFilter = "", bool bFinalized = false)
         {
             List<Rental> list = rentalList;
@@ -144,11 +205,6 @@ namespace Assessment2
             }
 
             return list;
-        }
-
-        public static List<Rental> Load()
-        {
-            return JsonData.Load<Rental>();
         }
     }
 }

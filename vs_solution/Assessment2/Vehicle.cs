@@ -8,8 +8,14 @@ using static Assessment2.Vehicle;
 
 namespace Assessment2
 {
+    /// <summary>
+    /// CLASS THAT HANDLES THE VEHICLE'S OPERATIONS
+    /// </summary>
     public class Vehicle
     {
+        /// <summary>
+        /// VEHICLE MAIN PROPERTIES
+        /// </summary>
         public int Id { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -18,7 +24,9 @@ namespace Assessment2
         public double OdometerReading { get; set; }
         public double TankCapacity { get; set; }
         public DateTime ModifiedDate { get; set; }
-
+        /// <summary>
+        /// RETURN VEHICLE DESCRIPTION
+        /// </summary>
         [JsonIgnore]
         public string vehicleDescription
         {
@@ -27,7 +35,9 @@ namespace Assessment2
                 return Manufacturer + " - " + Model;
             }
         }
-
+        /// <summary>
+        /// RETURN THE VEHICLE STATUS
+        /// </summary>
         [JsonIgnore]
         public statusType Status
         {
@@ -53,7 +63,9 @@ namespace Assessment2
                 return status;
             }
         }
-
+        /// <summary>
+        /// RETURN THE FRIENDLY STATUS TYPE USING EXTENSION
+        /// </summary>
         [JsonIgnore]
         public string StatusText
         {
@@ -62,7 +74,9 @@ namespace Assessment2
                 return Status.EnumText();
             }
         }
-
+        /// <summary>
+        /// VEHICLE STATUS
+        /// </summary>
         public enum statusType
         {
             Available,
@@ -71,7 +85,9 @@ namespace Assessment2
         }
 
         private Visibility _btnServiceVisibility = Visibility.Hidden;
-
+        /// <summary>
+        /// USED TO SHOW THE SERVICE BUTTON ON THE VEHICLE LIST FORM
+        /// </summary>
         [JsonIgnore]
         public Visibility btnServiceVisibility
         {
@@ -84,21 +100,30 @@ namespace Assessment2
                 _btnServiceVisibility = value;
             }
         }
-
-        private static List<Vehicle> _vehicleList { get { return Load(); } }
-
+        /// <summary>
+        /// MAIN VEHICLE LIST - GET IT FROM THE FILE
+        /// </summary>
+        private static List<Vehicle> _vehicleList { get { return JsonData.Load<Vehicle>(); } }
+        /// <summary>
+        /// MAIN VEHICLE LIST - PUBLIC
+        /// </summary>
         [JsonIgnore]
         public static List<Vehicle> vehicleList { get { return _vehicleList; } }
-
+        /// <summary>
+        /// CONSTRUCTOR
+        /// </summary>
         public Vehicle() { }
 
-        /**
-         * Class constructor specifying name of make (manufacturer), model and year
-         * of make.
-         * @param manufacturer
-         * @param model
-         * @param makeYear
-         */
+        /// <summary>
+        /// CONSTRUCTOR WHICH SET THE VEHICLE PROPERTIES
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="manufacturer"></param>
+        /// <param name="model"></param>
+        /// <param name="makeYear"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="odometerReading"></param>
+        /// <param name="tankCapacity"></param>
         private Vehicle(int id, string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
         {
             Id = id;
@@ -110,7 +135,15 @@ namespace Assessment2
             TankCapacity = tankCapacity;
             ModifiedDate = DateTime.Now;
         }
-        
+        /// <summary>
+        /// CREATE A NEW VEHICLE AND ADD TO THE LIST
+        /// </summary>
+        /// <param name="manufacturer"></param>
+        /// <param name="model"></param>
+        /// <param name="makeYear"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="odometerReading"></param>
+        /// <param name="tankCapacity"></param>
         public static void AddVehicle(string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
         {
             List<Vehicle> vehicleList = _vehicleList;
@@ -123,7 +156,16 @@ namespace Assessment2
 
             Service.recordService(vId);
         }
-
+        /// <summary>
+        /// UPDATE THE VEHICLE'S INFORMATION
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="manufacturer"></param>
+        /// <param name="model"></param>
+        /// <param name="makeYear"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="odometerReading"></param>
+        /// <param name="tankCapacity"></param>
         public static void EditVehicle(int id, string manufacturer, string model, int makeYear, string registrationNumber, double odometerReading, double tankCapacity)
         {
             List<Vehicle> vehicleList = _vehicleList;
@@ -142,7 +184,12 @@ namespace Assessment2
 
             JsonData.Save(vehicleList);
         }
-
+        /// <summary>
+        /// UPDATES THE VEHICLE ODOMETER
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <param name="newOdometerReading"></param>
+        /// <returns></returns>
         public static string UpdateOdometer(int vehicleId, double newOdometerReading)
         {
             List<Vehicle> vehicleList = _vehicleList;
@@ -163,7 +210,10 @@ namespace Assessment2
 
             return "";
         }
-
+        /// <summary>
+        /// REMOVE A VEHICLE FROM THE LIST
+        /// </summary>
+        /// <param name="v"></param>
         public static void DeleteVehicle(Vehicle v)
         {
             List<Vehicle> vehicleList = _vehicleList;
@@ -171,14 +221,11 @@ namespace Assessment2
             JsonData.Save(vehicleList);
         }
 
-        public static List<Vehicle> Load()
-        {
-            return JsonData.Load<Vehicle>();
-        }
-
-        /**
-         * Prints details for {@link Vehicle}
-         */
+        /// <summary>
+        /// RETURN A STRING WITH ALL THE NECESSARY INFORMATION OF THE VEHICLE
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         public static string printDetails(Vehicle v)
         {
             StringBuilder sAux2 = new StringBuilder();
@@ -186,7 +233,7 @@ namespace Assessment2
             sAux2.AppendLine();
             sAux2.AppendFormat("Registration No: {0}", v.RegistrationNumber);
             sAux2.AppendLine();
-            sAux2.AppendFormat("Total services: {0}", Service.StaticGetServiceCount(v.Id));
+            sAux2.AppendFormat("Total services: {0}", new Service().GetServiceCount(v.Id));
             sAux2.AppendLine();
             sAux2.AppendFormat("Revenue recorded: {0:C}", Rental.GetTotalRevenue(v.Id));
             sAux2.AppendLine();
@@ -210,25 +257,15 @@ namespace Assessment2
 
             return sAux2.ToString();
         }
-
-
-        // TODO Create an addKilometers method which takes a parameter for distance travelled 
-        // and adds it to the odometer reading. 
-        public void addKilometers(double distance)
-        {
-            OdometerReading += distance;
-        }
-
-        // adds fuel to the car
-        public void addFuel(double litres, double price)
-        {
-            //fuelPurchase.purchaseFuel(litres, price);
-        }
-
     }
 
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// EXTENSION METHOD TO RETURN A MORE FRIENDLY TEXT FROM THE VEHICLE STATUS
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public static string EnumText(this statusType e)
         {
             switch (e)

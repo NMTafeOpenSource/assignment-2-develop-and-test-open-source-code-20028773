@@ -4,7 +4,7 @@ using System.Windows;
 namespace Assessment2
 {
     /// <summary>
-    /// Interaction logic for Form_Rental.xaml
+    /// INTERACTION LOGIC FOR FORM_RENTAL.XAML
     /// </summary>
     public partial class Form_Rental : Window
     {
@@ -12,7 +12,9 @@ namespace Assessment2
         private int rentalId;
         private double dEndOdometer;
         private DateTime? dtEndDate = null;
-
+        /// <summary>
+        /// INITLIALIZE THE FORM COMPONENTS AND ADD THE RENT TYPE TO THE COMBO BOX
+        /// </summary>
         public void initialize()
         {
             InitializeComponent();
@@ -21,12 +23,11 @@ namespace Assessment2
 
             this.Title = "New Rental";
         }
-
-        public Form_Rental()
-        {
-            initialize();
-        }
-
+       
+        /// <summary>
+        /// CONSTRUCTOR - CALLED TO FINALIZE AN ONGOING RENTAL
+        /// </summary>
+        /// <param name="rental"></param>
         public Form_Rental(Rental rental)
         {
             initialize();
@@ -49,7 +50,9 @@ namespace Assessment2
             txtEndOdometer.IsEnabled = true;
             dpEndDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
         }
-
+        /// <summary>
+        /// CONSTRUCTOR - CALLED TO CREATE A NEW RENTAL
+        /// </summary>
         public Form_Rental(int vId, string vDescription, double odometer)
         {
             initialize();
@@ -60,7 +63,10 @@ namespace Assessment2
 
             dpStartDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
         }
-
+        /// <summary>
+        /// VALIDATE THE FORM FIELDS AND RETURN A ERROR MESSAGE IF NEEDED
+        /// </summary>
+        /// <returns></returns>
         public string validate()
         {
             if (string.IsNullOrEmpty(txtCustomer.Text))
@@ -98,10 +104,13 @@ namespace Assessment2
 
             return "";
         }
-
+        /// <summary>
+        /// ON THE BTN SAVE CLICK EITHER CREATES A NEW RENTAL OR FINALIZE THE RENTAL
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-
             string sMessage = validate();
 
             if (!string.IsNullOrEmpty(sMessage))
@@ -135,7 +144,11 @@ namespace Assessment2
 
             this.Close();
         }
-
+        /// <summary>
+        /// ON THE BTN CANCEL CLICK CLOSE THE FORM
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

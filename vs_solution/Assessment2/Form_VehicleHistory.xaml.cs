@@ -4,10 +4,14 @@ using System.Windows;
 namespace Assessment2
 {
     /// <summary>
-    /// Interaction logic for Form_VehicleHistory.xaml
+    /// INTERACTION LOGIC FOR FORM_VEHICLEHISTORY.XAML
     /// </summary>
     public partial class Form_VehicleHistory : Window
     {
+        /// <summary>
+        /// CONSTRUCTOR - POPULATE THE VEHICLE INFORMATION AND THE LIST VIEW WITH ALL PREVIOUS ENTRIES
+        /// </summary>
+        /// <param name="v"></param>
         public Form_VehicleHistory(Vehicle v)
         {
             InitializeComponent();
@@ -18,7 +22,6 @@ namespace Assessment2
             txtYear.Text = v.MakeYear.ToString();
             txtOdometer.Text = v.OdometerReading.ToString();
             txtTank.Text = v.TankCapacity.ToString();
-
 
             lvRentHistory.ItemsSource = Rental.rentalList.Where(x => x.vehicleId == v.Id && x.totalPrice > 0);
             lvRentHistory.Items.Refresh();
