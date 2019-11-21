@@ -23,6 +23,7 @@ You will need the Visual Studio 2017 or above.
 
 ```
 Clone the repository to your local machine and then open the solution file.
+As the program works with JSON files, you will need to get the Newtonsoft.Json from nuget
 ```
 
 ## Deployment
